@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.niz.androidtraining.server.domain.Image;
-import com.sun.istack.internal.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +15,7 @@ public class ImageService {
     private static final int MIN_SIZE = 300;
     private static final int MAX_SIZE = 800;
 
-    public Image getImage(@Nullable String type) {
+    public Image getImage(String type) {
         ImageType imageType = getImageType(type);
         int width = random.nextInt(MAX_SIZE - MIN_SIZE) + MIN_SIZE;
         int height = random.nextInt(MAX_SIZE - MIN_SIZE) + MIN_SIZE;
@@ -25,11 +24,11 @@ public class ImageService {
         return new Image(url, title, width, height);
     }
 
-    public List<Image> getImages(@Nullable String type, int count) {
+    public List<Image> getImages(String type, int count) {
         return IntStream.rangeClosed(1, count).mapToObj(i -> getImage(type)).collect(Collectors.toList());
     }
 
-    private ImageType getImageType(@Nullable String type) {
+    private ImageType getImageType(String type) {
         if (type != null) {
             return ImageType.fromType(type);
         } else {
